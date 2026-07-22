@@ -1,0 +1,108 @@
+[gd_scene load_steps=16 format=3 uid="uid://ccheqoei7vjot"]
+
+[ext_resource type="Script" uid="uid://yfa4hl6pjn8s" path="res://Player/player_movement.gd" id="1_6o0ik"]
+[ext_resource type="PackedScene" uid="uid://d2lvoc7ug02gh" path="res://Player/hurt_box_component.tscn" id="2_a2lsr"]
+[ext_resource type="PackedScene" uid="uid://c6k4doklvtqsv" path="res://Player/health_component.tscn" id="3_7ks48"]
+[ext_resource type="PackedScene" uid="uid://dxiqunfa5w766" path="res://Player/hit_box_component.tscn" id="4_7ks48"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cmany"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_c6gwx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7ks48"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7ks48"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_twxrc"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6o0ik"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j5phf"]
+
+[sub_resource type="GDScript" id="GDScript_344kc"]
+script/source = "extends CollisionShape3D
+
+@export var health_component: HealthComponent
+
+func damage(attack: Attack):
+	if health_component:
+		health_component.damage(attack)
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2lsr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ks48"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_twxrc"]
+
+[node name="World" type="Node3D"]
+
+[node name="Stage" type="Node3D" parent="."]
+transform = Transform3D(17.5173, 0, 0, 0, 1, 0, 0, 0, 14.959, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Stage"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/StaticBody3D"]
+shape = SubResource("BoxShape3D_cmany")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/StaticBody3D"]
+mesh = SubResource("BoxMesh_c6gwx")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.776761, 0.629795, 0, -0.629795, 0.776761, 0, 6.19957, 9.5657)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.570097, 0.821577, 0, -0.821577, 0.570097, 0, 12.6422, 3.3178)
+
+[node name="Enemy" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54722, 5.03637)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
+shape = SubResource("CapsuleShape3D_7ks48")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy"]
+mesh = SubResource("CapsuleMesh_7ks48")
+
+[node name="HealthComponent" parent="Enemy" instance=ExtResource("3_7ks48")]
+MAX_HEALTH = 30.0
+
+[node name="HurtBoxComponent" parent="Enemy" node_paths=PackedStringArray("health_component") instance=ExtResource("2_a2lsr")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/HurtBoxComponent"]
+shape = SubResource("CapsuleShape3D_twxrc")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54722, 0)
+script = ExtResource("1_6o0ik")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_6o0ik")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_j5phf")
+script = SubResource("GDScript_344kc")
+
+[node name="HurtBoxComponent" parent="CharacterBody3D" node_paths=PackedStringArray("health_component") instance=ExtResource("2_a2lsr")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/HurtBoxComponent"]
+shape = SubResource("CapsuleShape3D_a2lsr")
+
+[node name="HealthComponent" parent="CharacterBody3D" instance=ExtResource("3_7ks48")]
+MAX_HEALTH = 30.0
+
+[node name="HitBoxComponent" parent="CharacterBody3D" node_paths=PackedStringArray("collider", "self_hurtbox") instance=ExtResource("4_7ks48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.777839)
+attack_damage = 10.0
+knockback_force = 5.0
+stun_time = 1.0
+self_stun = 0.5
+collider = NodePath("CollisionShape3D")
+self_hurtbox = NodePath("../HurtBoxComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/HitBoxComponent"]
+shape = SubResource("BoxShape3D_7ks48")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/HitBoxComponent"]
+mesh = SubResource("BoxMesh_twxrc")
