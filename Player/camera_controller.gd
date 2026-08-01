@@ -1,5 +1,7 @@
 extends Node
 
+signal set_cam_rotation(_cam_rotation : float)
+
 @onready var yaw_node = $CamYaw
 @onready var pitch_node = $CamYaw/CamPitch
 @onready var camera = $CamYaw/CamPitch/SpringArm3D/Camera3D
@@ -36,3 +38,5 @@ func _physics_process(delta):
 	# If you want it less smooth 
 	#yaw_node.rotation_degrees.y = yaw
 	#pitch_node.rotation_degrees.x = pitch
+	
+	set_cam_rotation.emit(yaw_node.rotation.y)
