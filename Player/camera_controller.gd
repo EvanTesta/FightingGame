@@ -2,7 +2,7 @@ extends Node
 
 @onready var yaw_node = $CamYaw
 @onready var pitch_node = $CamYaw/CamPitch
-@onready var camera = $CamYaw/CamPitch/Camera3D
+@onready var camera = $CamYaw/CamPitch/SpringArm3D/Camera3D
 
 var yaw: float = 0
 var pitch: float = 0

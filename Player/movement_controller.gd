@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 @export var player : CharacterBody3D
 @export var mesh_root : Node3D
@@ -16,7 +16,7 @@ func _physics_process(delta):
 	player.move_and_slide()
 	
 	# gets the target rotation as an angle
-	# player rotation is removed to account of the player's current rotation.
+	# we remove player rotation incase we want to edit the rotation in the editor
 	var target_rotation = atan2(direction.x, direction.z) - player.rotation.y
 	# move from the current angle to the target angle at the rotation speed
 	# angle is used because of the flip from 359 to 0

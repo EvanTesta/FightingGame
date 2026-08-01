@@ -13,13 +13,13 @@ func _ready():
 func _input(event):
 	if event.is_action("movement"):
 		# Whenever an action is pressed the strength becomes 1
-		movement_direction.x = Input.get_action_strength("left") - Input.get_action_strength("right")
-		movement_direction.y = Input.get_action_strength("forward") - Input.get_action_strength("back")
+		movement_direction.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
+		movement_direction.y = Input.get_action_strength("Forward") - Input.get_action_strength("Back")
 		
 		# Adding movement animations go here
 		if is_movement_ongoing():
-			if Input.is_action_pressed("walk"):
-				set_movement_state.emit(movement_states["walk"])
+			#if Input.is_action_pressed("movement"):
+			set_movement_state.emit(movement_states["walk"])
 		else:
 			set_movement_state.emit(movement_states["idle"])
 			

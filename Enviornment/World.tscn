@@ -141,8 +141,10 @@ spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="Player/CamRoot/CamYaw/CamPitch/SpringArm3D" unique_id=836617263]
 
-[node name="MovementController" type="Node3D" parent="Player" unique_id=1782047707]
+[node name="MovementController" type="Node3D" parent="Player" unique_id=2000873800 node_paths=PackedStringArray("player", "mesh_root")]
 script = ExtResource("8_7gn8j")
+player = NodePath("..")
+mesh_root = NodePath("../MeshRoot")
 
 [connection signal="set_movement_direction" from="Player" to="Player/MovementController" method="_on_set_movement_direction"]
 [connection signal="set_movement_state" from="Player" to="Player/MovementController" method="_on_set_movement_state"]
