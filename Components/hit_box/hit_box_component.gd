@@ -23,7 +23,7 @@ func _ready():
 	attack.attack_positon = position
 	attack.stun_time = stun_time
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("Q"):
 		timer.start()
 		collider.disabled  = false
