@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://ccheqoei7vjot"]
 
 [ext_resource type="Script" uid="uid://yfa4hl6pjn8s" path="res://Player/player_movement.gd" id="1_6o0ik"]
-[ext_resource type="PackedScene" uid="uid://d2lvoc7ug02gh" path="res://Player/hurt_box_component.tscn" id="2_a2lsr"]
-[ext_resource type="PackedScene" uid="uid://c6k4doklvtqsv" path="res://Player/health_component.tscn" id="3_7ks48"]
-[ext_resource type="PackedScene" uid="uid://dxiqunfa5w766" path="res://Player/hit_box_component.tscn" id="4_7ks48"]
+[ext_resource type="PackedScene" uid="uid://d2lvoc7ug02gh" path="res://Player/Components/hurt_box_component.tscn" id="2_a2lsr"]
+[ext_resource type="PackedScene" uid="uid://c6k4doklvtqsv" path="res://Player/Components/health_component.tscn" id="3_7ks48"]
+[ext_resource type="PackedScene" uid="uid://dxiqunfa5w766" path="res://Player/Components/hit_box_component.tscn" id="4_7ks48"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cmany"]
 

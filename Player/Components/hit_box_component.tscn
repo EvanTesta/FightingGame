@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxiqunfa5w766"]
 
-[ext_resource type="Script" uid="uid://bs1petoq80ca6" path="res://Player/hit_box_component.gd" id="1_gqw0k"]
+[ext_resource type="Script" uid="uid://bs1petoq80ca6" path="res://Player/Component_Scripts/hit_box_component.gd" id="1_gqw0k"]
 
 [node name="HitBoxComponent" type="Area3D"]
 visible = false
