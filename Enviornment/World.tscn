@@ -1,9 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://ccheqoei7vjot"]
+[gd_scene format=3 uid="uid://ccheqoei7vjot"]
 
 [ext_resource type="PackedScene" uid="uid://d2lvoc7ug02gh" path="res://Components/hurt_box/hurt_box_component.tscn" id="2_a2lsr"]
 [ext_resource type="PackedScene" uid="uid://c6k4doklvtqsv" path="res://Components/health/health_component.tscn" id="3_7ks48"]
+[ext_resource type="Script" uid="uid://bonqdqlyg02dd" path="res://Player/player.gd" id="3_twxrc"]
 [ext_resource type="PackedScene" uid="uid://dxiqunfa5w766" path="res://Components/hit_box/hit_box_component.tscn" id="4_7ks48"]
+[ext_resource type="Resource" uid="uid://vmkpfltqlpd0" path="res://Player/MovementStates/walk.tres" id="4_ltpxp"]
+[ext_resource type="Resource" uid="uid://ckr82e6v1m1en" path="res://Player/MovementStates/idle.tres" id="4_sdnp3"]
 [ext_resource type="Script" uid="uid://dows07iqudvkg" path="res://Player/camera_controller.gd" id="4_twxrc"]
+[ext_resource type="Script" uid="uid://ncfnc6dquxd2" path="res://Player/movement_controller.gd" id="8_7gn8j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cmany"]
 
@@ -14,37 +18,6 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7ks48"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_twxrc"]
-
-[sub_resource type="GDScript" id="GDScript_a2lsr"]
-script/source = "extends CharacterBody3D
-
-
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
-
-
-func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
-	move_and_slide()
-"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j5phf"]
 
@@ -66,69 +39,75 @@ func damage(attack: Attack):
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6o0ik"]
 
-[node name="World" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_uw2ba"]
 
-[node name="Wall" type="Node3D" parent="."]
+[node name="World" type="Node3D" unique_id=1753408827]
+
+[node name="Wall" type="Node3D" parent="." unique_id=968940151]
 transform = Transform3D(6.00431, 0, 0, 0, 2.62802, 0, 0, 0, -0.648379, 0, 1.81164, -5.59278)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Wall"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall" unique_id=1100280178]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/StaticBody3D" unique_id=780948990]
 shape = SubResource("BoxShape3D_cmany")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/StaticBody3D" unique_id=453269817]
 mesh = SubResource("BoxMesh_c6gwx")
 
-[node name="Stage" type="Node3D" parent="."]
+[node name="Stage" type="Node3D" parent="." unique_id=1603724723]
 transform = Transform3D(17.5173, 0, 0, 0, 1, 0, 0, 0, 14.959, 0, 0, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Stage"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Stage" unique_id=826523483]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/StaticBody3D" unique_id=1564428132]
 shape = SubResource("BoxShape3D_cmany")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/StaticBody3D" unique_id=312916817]
 mesh = SubResource("BoxMesh_c6gwx")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=448752740]
 transform = Transform3D(1, 0, 0, 0, 0.570097, 0.821577, 0, -0.821577, 0.570097, 0, 12.6422, 3.3178)
 
-[node name="Enemy" type="StaticBody3D" parent="."]
+[node name="Enemy" type="StaticBody3D" parent="." unique_id=783837544]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54722, 5.03637)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy" unique_id=201258756]
 shape = SubResource("CapsuleShape3D_7ks48")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy" unique_id=345416382]
 mesh = SubResource("CapsuleMesh_7ks48")
 
-[node name="HealthComponent" parent="Enemy" instance=ExtResource("3_7ks48")]
+[node name="HealthComponent" parent="Enemy" unique_id=1038386672 instance=ExtResource("3_7ks48")]
 MAX_HEALTH = 30.0
 
-[node name="HurtBoxComponent" parent="Enemy" node_paths=PackedStringArray("health_component") instance=ExtResource("2_a2lsr")]
+[node name="HurtBoxComponent" parent="Enemy" unique_id=223394189 node_paths=PackedStringArray("health_component") instance=ExtResource("2_a2lsr")]
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/HurtBoxComponent"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/HurtBoxComponent" unique_id=375020284]
 shape = SubResource("CapsuleShape3D_twxrc")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=301401932]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54722, 0)
-script = SubResource("GDScript_a2lsr")
+script = ExtResource("3_twxrc")
+movement_states = {
+"idle": ExtResource("4_sdnp3"),
+"walk": ExtResource("4_ltpxp")
+}
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=2092453795]
 shape = SubResource("CapsuleShape3D_j5phf")
 script = SubResource("GDScript_344kc")
 
-[node name="HurtBoxComponent" parent="CharacterBody3D" node_paths=PackedStringArray("health_component") instance=ExtResource("2_a2lsr")]
+[node name="HurtBoxComponent" parent="Player" unique_id=1927042268 node_paths=PackedStringArray("health_component") instance=ExtResource("2_a2lsr")]
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/HurtBoxComponent"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/HurtBoxComponent" unique_id=781136159]
 shape = SubResource("CapsuleShape3D_a2lsr")
 
-[node name="HealthComponent" parent="CharacterBody3D" instance=ExtResource("3_7ks48")]
+[node name="HealthComponent" parent="Player" unique_id=82221156 instance=ExtResource("3_7ks48")]
 MAX_HEALTH = 30.0
 
-[node name="HitBoxComponent" parent="CharacterBody3D" node_paths=PackedStringArray("collider", "self_hurtbox") instance=ExtResource("4_7ks48")]
+[node name="HitBoxComponent" parent="Player" unique_id=2019521835 node_paths=PackedStringArray("collider", "self_hurtbox") instance=ExtResource("4_7ks48")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.777839)
 attack_damage = 10.0
 knockback_force = 5.0
@@ -137,26 +116,33 @@ self_stun = 0.5
 collider = NodePath("CollisionShape3D")
 self_hurtbox = NodePath("../HurtBoxComponent")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/HitBoxComponent"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/HitBoxComponent" unique_id=455753195]
 shape = SubResource("BoxShape3D_7ks48")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/HitBoxComponent"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/HitBoxComponent" unique_id=1250164018]
 mesh = SubResource("BoxMesh_twxrc")
 
-[node name="MeshRoot" type="Node3D" parent="CharacterBody3D"]
+[node name="MeshRoot" type="Node3D" parent="Player" unique_id=1558343408]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/MeshRoot"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/MeshRoot" unique_id=1498543260]
 mesh = SubResource("CapsuleMesh_6o0ik")
 skeleton = NodePath("../..")
 
-[node name="CamRoot" type="Node3D" parent="CharacterBody3D"]
+[node name="CamRoot" type="Node3D" parent="Player" unique_id=1263370884]
 script = ExtResource("4_twxrc")
 
-[node name="CamYaw" type="Node3D" parent="CharacterBody3D/CamRoot"]
+[node name="CamYaw" type="Node3D" parent="Player/CamRoot" unique_id=2001734436]
 
-[node name="CamPitch" type="Node3D" parent="CharacterBody3D/CamRoot/CamYaw"]
+[node name="CamPitch" type="Node3D" parent="Player/CamRoot/CamYaw" unique_id=703955439]
 
-[node name="SpringArm3D" type="SpringArm3D" parent="CharacterBody3D/CamRoot/CamYaw/CamPitch"]
+[node name="SpringArm3D" type="SpringArm3D" parent="Player/CamRoot/CamYaw/CamPitch" unique_id=819131041]
+shape = SubResource("SphereShape3D_uw2ba")
 spring_length = 3.0
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CamRoot/CamYaw/CamPitch/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="Player/CamRoot/CamYaw/CamPitch/SpringArm3D" unique_id=836617263]
+
+[node name="MovementController" type="Node3D" parent="Player" unique_id=1782047707]
+script = ExtResource("8_7gn8j")
+
+[connection signal="set_movement_direction" from="Player" to="Player/MovementController" method="_on_set_movement_direction"]
+[connection signal="set_movement_state" from="Player" to="Player/MovementController" method="_on_set_movement_state"]

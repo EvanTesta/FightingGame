@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MovementState" format=3 uid="uid://ckr82e6v1m1en"]
+
+[ext_resource type="Script" uid="uid://c45mpl3q01ut0" path="res://Player/MovementState.gd" id="1_oj4lv"]
+
+[resource]
+script = ExtResource("1_oj4lv")
+state_name = "idle"
+camera_fov = 70.0
+metadata/_custom_type_script = "uid://c45mpl3q01ut0"
