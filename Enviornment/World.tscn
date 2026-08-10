@@ -40,8 +40,6 @@ func damage(attack: Attack):
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ks48"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jy2rd"]
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_uw2ba"]
 
 [node name="World" type="Node3D" unique_id=1753408827]
@@ -90,7 +88,7 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("CapsuleShape3D_twxrc")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=301401932]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9118938, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9118938, 0.36535668)
 script = ExtResource("3_twxrc")
 movement_states = {
 "idle": ExtResource("4_sdnp3"),
@@ -122,15 +120,10 @@ self_hurtbox = NodePath("../HurtBoxComponent")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/HitBoxComponent" unique_id=455753195]
 shape = SubResource("BoxShape3D_7ks48")
 
-[node name="angel_Export1" parent="Player/HitBoxComponent" unique_id=1970403323 instance=ExtResource("7_r6udl")]
-
 [node name="MeshRoot" type="Node3D" parent="Player" unique_id=1558343408]
 
 [node name="angel_Export1" parent="Player/MeshRoot" unique_id=601247433 instance=ExtResource("7_r6udl")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.9637308, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/MeshRoot" unique_id=1965295575]
-mesh = SubResource("CapsuleMesh_jy2rd")
 
 [node name="CamRoot" type="Node3D" parent="Player" unique_id=1263370884]
 script = ExtResource("4_twxrc")
