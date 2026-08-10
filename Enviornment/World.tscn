@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dows07iqudvkg" path="res://Player/camera_controller.gd" id="4_twxrc"]
 [ext_resource type="PackedScene" uid="uid://cpt8r60lxp8fb" path="res://Assets/angel_scene.tscn" id="7_r6udl"]
 [ext_resource type="Script" uid="uid://ncfnc6dquxd2" path="res://Player/movement_controller.gd" id="8_7gn8j"]
+[ext_resource type="Script" uid="uid://dsbidnyuu4eht" path="res://Player/animation_controller.gd" id="10_fyu23"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cmany"]
 
@@ -39,6 +40,33 @@ func damage(attack: Attack):
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a2lsr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ks48"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_r6udl"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fyu23"]
+animation = &"IDLE"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jmtj1"]
+animation = &"MOVEF"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_hqjh8"]
+min_space = 0.0
+snap = 1.0
+blend_point_0/node = SubResource("AnimationNodeAnimation_fyu23")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"IDLE"
+blend_point_1/node = SubResource("AnimationNodeAnimation_jmtj1")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"MOVEF"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_jy2rd"]
+graph_offset = Vector2(-626.11084, 91.35292)
+nodes/output/position = Vector2(288, 160)
+nodes/movement_blend/node = SubResource("AnimationNodeBlendSpace1D_hqjh8")
+nodes/movement_blend/position = Vector2(-304, 144)
+nodes/movement_anim_speed/node = SubResource("AnimationNodeTimeScale_r6udl")
+nodes/movement_anim_speed/position = Vector2(-32, 144)
+node_connections = [&"output", 0, &"movement_anim_speed", &"movement_anim_speed", 0, &"movement_blend"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uw2ba"]
 
@@ -125,6 +153,18 @@ shape = SubResource("BoxShape3D_7ks48")
 [node name="angel_Export1" parent="Player/MeshRoot" unique_id=601247433 instance=ExtResource("7_r6udl")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.9637308, 0)
 
+[node name="Skeleton3D" parent="Player/MeshRoot/angel_Export1/Armature" parent_id_path=PackedInt32Array(601247433, 1252609682) index="0" unique_id=1279677845]
+bones/6/rotation = Quaternion(-0.23840897, -0.0015180425, -0.03950012, 0.97036004)
+bones/14/rotation = Quaternion(-0.23840894, 0.0015180422, 0.039500132, 0.97036004)
+bones/15/rotation = Quaternion(0.7567767, 0.0051841117, 0.04398959, 0.6521711)
+
+[node name="AnimationTree" type="AnimationTree" parent="Player/MeshRoot" unique_id=195920546]
+root_node = NodePath("../angel_Export1")
+tree_root = SubResource("AnimationNodeBlendTree_jy2rd")
+anim_player = NodePath("../angel_Export1/AnimationPlayer")
+parameters/movement_blend/blend_position = 0.0
+parameters/movement_anim_speed/scale = 1.0
+
 [node name="CamRoot" type="Node3D" parent="Player" unique_id=1263370884]
 script = ExtResource("4_twxrc")
 
@@ -143,6 +183,14 @@ script = ExtResource("8_7gn8j")
 player = NodePath("..")
 mesh_root = NodePath("../MeshRoot")
 
+[node name="AnimationController" type="Node3D" parent="Player" unique_id=1496093748 node_paths=PackedStringArray("animation_tree", "player")]
+script = ExtResource("10_fyu23")
+animation_tree = NodePath("../MeshRoot/AnimationTree")
+player = NodePath("..")
+
 [connection signal="set_movement_direction" from="Player" to="Player/MovementController" method="_on_set_movement_direction"]
 [connection signal="set_movement_state" from="Player" to="Player/MovementController" method="_on_set_movement_state"]
+[connection signal="set_movement_state" from="Player" to="Player/AnimationController" method="_on_set_movement_state_"]
 [connection signal="set_cam_rotation" from="Player/CamRoot" to="Player/MovementController" method="_on_set_cam_rotation"]
+
+[editable path="Player/MeshRoot/angel_Export1"]
