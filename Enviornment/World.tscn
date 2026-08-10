@@ -26,6 +26,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_twxrc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j5phf"]
+height = 1.784668
 
 [sub_resource type="GDScript" id="GDScript_344kc"]
 script/source = "extends CollisionShape3D
@@ -47,7 +48,7 @@ func damage(attack: Attack):
 animation = &"IDLE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jmtj1"]
-animation = &"MOVEF"
+animation = &"DASHF"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_hqjh8"]
 min_space = 0.0
@@ -116,7 +117,7 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("CapsuleShape3D_twxrc")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=301401932]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9118938, 0.36535668)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8713784, 0.36535668)
 script = ExtResource("3_twxrc")
 movement_states = {
 "idle": ExtResource("4_sdnp3"),
@@ -124,6 +125,7 @@ movement_states = {
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=2092453795]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.108142376, 0)
 shape = SubResource("CapsuleShape3D_j5phf")
 script = SubResource("GDScript_344kc")
 
@@ -131,6 +133,7 @@ script = SubResource("GDScript_344kc")
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/HurtBoxComponent" unique_id=781136159]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2712679, 0)
 shape = SubResource("CapsuleShape3D_a2lsr")
 
 [node name="HealthComponent" parent="Player" unique_id=82221156 instance=ExtResource("3_7ks48")]
@@ -162,7 +165,7 @@ bones/15/rotation = Quaternion(0.7567767, 0.0051841117, 0.04398959, 0.6521711)
 root_node = NodePath("../angel_Export1")
 tree_root = SubResource("AnimationNodeBlendTree_jy2rd")
 anim_player = NodePath("../angel_Export1/AnimationPlayer")
-parameters/movement_blend/blend_position = 0.0
+parameters/movement_blend/blend_position = -0.039496783
 parameters/movement_anim_speed/scale = 1.0
 
 [node name="CamRoot" type="Node3D" parent="Player" unique_id=1263370884]
@@ -171,6 +174,7 @@ script = ExtResource("4_twxrc")
 [node name="CamYaw" type="Node3D" parent="Player/CamRoot" unique_id=2001734436]
 
 [node name="CamPitch" type="Node3D" parent="Player/CamRoot/CamYaw" unique_id=703955439]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Player/CamRoot/CamYaw/CamPitch" unique_id=819131041]
 shape = SubResource("SphereShape3D_uw2ba")

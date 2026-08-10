@@ -18,7 +18,7 @@ func _physics_process(delta):
 	
 	# gets the target rotation as an angle
 	# we remove player rotation incase we want to edit the rotation in the editor
-	var target_rotation = atan2(direction.x, direction.z) #- player.rotation.y
+	var target_rotation = atan2(direction.x, direction.z) - player.rotation.y
 	# move from the current angle to the target angle at the rotation speed
 	# angle is used because of the flip from 359 to 0
 	mesh_root.rotation.y = lerp_angle(mesh_root.rotation.y, target_rotation, rotation_speed * delta)
