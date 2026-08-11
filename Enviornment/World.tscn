@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://vmkpfltqlpd0" path="res://Player/MovementStates/walk.tres" id="4_ltpxp"]
 [ext_resource type="Resource" uid="uid://ckr82e6v1m1en" path="res://Player/MovementStates/idle.tres" id="4_sdnp3"]
 [ext_resource type="Script" uid="uid://dows07iqudvkg" path="res://Player/camera_controller.gd" id="4_twxrc"]
-[ext_resource type="PackedScene" uid="uid://cpt8r60lxp8fb" path="res://Assets/angel_scene.tscn" id="7_r6udl"]
+[ext_resource type="PackedScene" uid="uid://bsw624gp0ln6q" path="res://Player/angel.tscn" id="7_fyu23"]
 [ext_resource type="Script" uid="uid://ncfnc6dquxd2" path="res://Player/movement_controller.gd" id="8_7gn8j"]
 [ext_resource type="Script" uid="uid://dsbidnyuu4eht" path="res://Player/animation_controller.gd" id="10_fyu23"]
 
@@ -48,7 +48,7 @@ func damage(attack: Attack):
 animation = &"IDLE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jmtj1"]
-animation = &"DASHF"
+animation = &"MOVEF"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_hqjh8"]
 min_space = 0.0
@@ -61,7 +61,7 @@ blend_point_1/pos = 1.0
 blend_point_1/name = &"MOVEF"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_jy2rd"]
-graph_offset = Vector2(-626.11084, 91.35292)
+graph_offset = Vector2(-459.91177, 110.90791)
 nodes/output/position = Vector2(288, 160)
 nodes/movement_blend/node = SubResource("AnimationNodeBlendSpace1D_hqjh8")
 nodes/movement_blend/position = Vector2(-304, 144)
@@ -117,7 +117,7 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("CapsuleShape3D_twxrc")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=301401932]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8713784, 0.36535668)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2825137, 0.365)
 script = ExtResource("3_twxrc")
 movement_states = {
 "idle": ExtResource("4_sdnp3"),
@@ -125,7 +125,7 @@ movement_states = {
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=2092453795]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.108142376, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66572, 0)
 shape = SubResource("CapsuleShape3D_j5phf")
 script = SubResource("GDScript_344kc")
 
@@ -133,14 +133,15 @@ script = SubResource("GDScript_344kc")
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player/HurtBoxComponent" unique_id=781136159]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2712679, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7585864, 0)
 shape = SubResource("CapsuleShape3D_a2lsr")
 
 [node name="HealthComponent" parent="Player" unique_id=82221156 instance=ExtResource("3_7ks48")]
 MAX_HEALTH = 30.0
 
 [node name="HitBoxComponent" parent="Player" unique_id=2019521835 node_paths=PackedStringArray("collider", "self_hurtbox") instance=ExtResource("4_7ks48")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.777839)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96886015, 0.77783895)
+visible = true
 attack_damage = 10.0
 knockback_force = 5.0
 stun_time = 1.0
@@ -152,20 +153,44 @@ self_hurtbox = NodePath("../HurtBoxComponent")
 shape = SubResource("BoxShape3D_7ks48")
 
 [node name="MeshRoot" type="Node3D" parent="Player" unique_id=1558343408]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.34489727, 0)
 
-[node name="angel_Export1" parent="Player/MeshRoot" unique_id=601247433 instance=ExtResource("7_r6udl")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.9637308, 0)
+[node name="Angel_fixedWALKING" parent="Player/MeshRoot" unique_id=275632163 instance=ExtResource("7_fyu23")]
 
-[node name="Skeleton3D" parent="Player/MeshRoot/angel_Export1/Armature" parent_id_path=PackedInt32Array(601247433, 1252609682) index="0" unique_id=1279677845]
-bones/6/rotation = Quaternion(-0.23840897, -0.0015180425, -0.03950012, 0.97036004)
-bones/14/rotation = Quaternion(-0.23840894, 0.0015180422, 0.039500132, 0.97036004)
-bones/15/rotation = Quaternion(0.7567767, 0.0051841117, 0.04398959, 0.6521711)
+[node name="Skeleton3D" parent="Player/MeshRoot/Angel_fixedWALKING/Armature" parent_id_path=PackedInt32Array(275632163, 1151208838) index="0" unique_id=760956837]
+bones/0/position = Vector3(0, 3.4355512, 0)
+bones/0/rotation = Quaternion(0, 0, 0, 1)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
+bones/2/position = Vector3(0.86766845, 1.4615567, -0.14500347)
+bones/2/rotation = Quaternion(0.2692093, 0.28752303, 0.84416556, 0.36365017)
+bones/3/rotation = Quaternion(0.15848607, 0.81516117, -0.07791378, 0.55165565)
+bones/4/rotation = Quaternion(-0.019174539, 1.3210943e-05, 0.000674982, 0.99981594)
+bones/5/position = Vector3(0.49664974, 0.17842832, -0.020370813)
+bones/5/rotation = Quaternion(0.051164936, 0.1618749, 0.9807666, -0.09630983)
+bones/6/rotation = Quaternion(-0.23840898, -0.0015180428, -0.039500125, 0.9703601)
+bones/7/rotation = Quaternion(0.75677663, -0.005184112, -0.043989625, 0.65217113)
+bones/8/position = Vector3(0.32156226, 1.4934161, -0.75791055)
+bones/8/rotation = Quaternion(-0.0016977208, 0.12730362, -0.43453, 0.8916135)
+bones/9/position = Vector3(-0.1125679, 2.435177, -0.33356032)
+bones/9/rotation = Quaternion(-0.20928293, 0.017888466, -0.12763427, 0.9693246)
+bones/10/position = Vector3(-0.5624379, 1.4258934, -4.2021465e-08)
+bones/10/rotation = Quaternion(0.20905088, 0.09265256, 0.908394, 0.350048)
+bones/11/rotation = Quaternion(-0.1267295, 0.7745954, 0.49604407, -0.37132445)
+bones/12/rotation = Quaternion(0.23827367, 0.8551873, -0.17856212, -0.4242592)
+bones/13/position = Vector3(-0.49664974, 0.17842832, -0.020370813)
+bones/13/rotation = Quaternion(-0.051164906, 0.16187488, 0.9807666, 0.09630982)
+bones/14/rotation = Quaternion(-0.23840894, 0.0015180425, 0.039500132, 0.97036004)
+bones/15/rotation = Quaternion(0.7567767, 0.005184108, 0.04398958, 0.652171)
+bones/16/position = Vector3(-0.32156226, 1.4934161, -0.75791055)
+bones/16/rotation = Quaternion(-0.001697802, -0.12730359, 0.43453, 0.8916135)
+bones/17/position = Vector3(0.112568274, 2.4351768, -0.3335603)
+bones/17/rotation = Quaternion(-0.20928293, -0.01788845, 0.12763426, 0.9693246)
 
 [node name="AnimationTree" type="AnimationTree" parent="Player/MeshRoot" unique_id=195920546]
-root_node = NodePath("../angel_Export1")
+root_node = NodePath("../Angel_fixedWALKING")
 tree_root = SubResource("AnimationNodeBlendTree_jy2rd")
-anim_player = NodePath("../angel_Export1/AnimationPlayer")
-parameters/movement_blend/blend_position = -0.039496783
+anim_player = NodePath("../Angel_fixedWALKING/AnimationPlayer")
+parameters/movement_blend/blend_position = -0.16327396
 parameters/movement_anim_speed/scale = 1.0
 
 [node name="CamRoot" type="Node3D" parent="Player" unique_id=1263370884]
@@ -174,7 +199,7 @@ script = ExtResource("4_twxrc")
 [node name="CamYaw" type="Node3D" parent="Player/CamRoot" unique_id=2001734436]
 
 [node name="CamPitch" type="Node3D" parent="Player/CamRoot/CamYaw" unique_id=703955439]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.290034, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Player/CamRoot/CamYaw/CamPitch" unique_id=819131041]
 shape = SubResource("SphereShape3D_uw2ba")
@@ -197,4 +222,4 @@ player = NodePath("..")
 [connection signal="set_movement_state" from="Player" to="Player/AnimationController" method="_on_set_movement_state_"]
 [connection signal="set_cam_rotation" from="Player/CamRoot" to="Player/MovementController" method="_on_set_cam_rotation"]
 
-[editable path="Player/MeshRoot/angel_Export1"]
+[editable path="Player/MeshRoot/Angel_fixedWALKING"]
